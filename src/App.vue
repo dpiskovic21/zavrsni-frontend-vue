@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import AppNavigacija from './shared/components/AppNavigacija.vue'
+import { RouterView } from "vue-router";
+import AppNavigacija from "./shared/components/AppNavigacija.vue";
 </script>
 
 <template>
+  <Toast />
   <header>
     <AppNavigacija />
   </header>

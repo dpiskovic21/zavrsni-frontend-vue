@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink } from "vue-router";
 </script>
 
 <template>
@@ -10,4 +10,12 @@ import { RouterLink } from 'vue-router'
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+nav {
+  padding: 2rem;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  border-bottom: 1px solid white;
+}
+</style>
