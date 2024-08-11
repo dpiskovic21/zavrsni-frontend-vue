@@ -23,6 +23,11 @@ const router = createRouter({
       name: "projekt-lista",
       component: () => import("../features/projekt/views/ProjektListaView.vue"),
     },
+    {
+      path: "/projekt/:id/lista",
+      name: "zadatak-lista",
+      component: () => import("../features/zadatak/views/ZadatakListaView.vue"),
+    },
   ],
 });
 

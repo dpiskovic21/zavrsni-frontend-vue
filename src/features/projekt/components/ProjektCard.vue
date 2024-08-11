@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { defineProps, onMounted } from "vue";
+import { defineProps } from "vue";
 import { useDialog } from "primevue/usedialog";
 import { type Projekt } from "../interfaces";
 import ProjektDetalji from "./ProjektDetalji.vue";
+import { useRouter } from "vue-router";
 
 const props = defineProps<{ projekt: Projekt }>();
-const emit = defineEmits(["projektIzmjenjen"]);
+const emit = defineEmits<{
+  projektIzmjenjen: [];
+}>();
 
 const dialog = useDialog();
+const ruter = useRouter();
 
 function getProjektStatusTagPozadina(status: string) {
   switch (status) {
@@ -21,6 +25,7 @@ function getProjektStatusTagPozadina(status: string) {
       return { background: "gray", color: "white" };
   }
 }
+
 function getProjektSatusVrijednostZaPrikaz(status: string) {
   switch (status) {
     case "U_TIJEKU":
@@ -49,6 +54,10 @@ function otvoriDialogZaDetalje() {
     },
   });
 }
+
+function preusmjeriNaZadatke() {
+  ruter.push({ name: "zadatak-lista", params: { id: props.projekt.id } });
+}
 </script>
 
 <template>
@@ -67,7 +76,7 @@ function otvoriDialogZaDetalje() {
       </template>
 
       <template #footer>
-        <Button label="Otvori" />
+        <Button label="Otvori" @click="preusmjeriNaZadatke()" />
         <Button
           class="float-right"
           icon="pi pi-cog"
