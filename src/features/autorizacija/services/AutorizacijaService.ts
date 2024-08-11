@@ -1,6 +1,7 @@
 import axios, { type AxiosInstance } from "axios";
 import { config } from "@/shared/Config";
 import type { PrijavaDTO } from "../interfaces";
+import type { Korisnik } from "@/features/korisnik/interfaces";
 
 export class AutorizacijaService {
   private apiClient: AxiosInstance;
@@ -11,6 +12,16 @@ export class AutorizacijaService {
         "Content-Type": "application/json",
       },
     });
+  }
+
+  get prijavljeniKorisnik(): Korisnik | null {
+    const korisnik = JSON.parse(localStorage.getItem("korisnik")!);
+
+    if (!korisnik) {
+      return null;
+    }
+
+    return korisnik;
   }
 
   async prijava(dto: PrijavaDTO) {

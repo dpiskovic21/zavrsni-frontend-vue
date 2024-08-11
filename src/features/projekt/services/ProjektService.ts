@@ -23,7 +23,7 @@ export class ProjektService {
     return response.data;
   }
 
-  async getProjekt(id: number): Promise<Projekt> {
+  async getProjekt(id: string): Promise<Projekt> {
     const response = await this.apiClient.get(`/${id}`);
     return response.data;
   }
