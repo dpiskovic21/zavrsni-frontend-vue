@@ -4,12 +4,14 @@ import AppNavigacija from "./shared/components/AppNavigacija.vue";
 </script>
 
 <template>
-  <Toast />
   <header>
     <AppNavigacija />
   </header>
 
   <RouterView />
+
+  <Toast />
+  <DynamicDialog />
 </template>
 
 <style scoped></style>

@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
+import { defineProps, onMounted } from "vue";
+import { useDialog } from "primevue/usedialog";
 import { type Projekt } from "../interfaces";
+import ProjektDetalji from "./ProjektDetalji.vue";
 
-defineProps<{ projekt: Projekt }>();
+const props = defineProps<{ projekt: Projekt }>();
+const emit = defineEmits(["projektIzmjenjen"]);
+
+const dialog = useDialog();
 
 function getProjektStatusTagPozadina(status: string) {
   switch (status) {
@@ -28,6 +33,22 @@ function getProjektSatusVrijednostZaPrikaz(status: string) {
       return "Nepoznat";
   }
 }
+
+function otvoriDialogZaDetalje() {
+  dialog.open(ProjektDetalji, {
+    props: {
+      header: "Detalji projekta",
+      style: { width: "70%", height: "70%" },
+      modal: true,
+    },
+    data: props.projekt.id,
+    onClose: (r) => {
+      if (r) {
+        emit("projektIzmjenjen");
+      }
+    },
+  });
+}
 </script>
 
 <template>
@@ -45,7 +66,11 @@ function getProjektSatusVrijednostZaPrikaz(status: string) {
 
       <template #footer>
         <Button label="Otvori" />
-        <Button class="float-right" icon="pi pi-cog" />
+        <Button
+          class="float-right"
+          icon="pi pi-cog"
+          @click="otvoriDialogZaDetalje()"
+        />
       </template>
     </Card>
   </div>

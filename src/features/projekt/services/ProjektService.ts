@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance } from "axios";
 import { config } from "@/shared/Config";
-import type { Projekt } from "../interfaces";
+import type { Projekt, UpdateProjektDTO } from "../interfaces";
 
 export class ProjektService {
   private apiClient: AxiosInstance;
@@ -43,7 +43,8 @@ export class ProjektService {
     return response.data;
   }
 
-  //   updateProjekt(id: number, dto: any) {
-  //     return this.http.patch(`${this.url}/${id}`, dto);
-  //   }
+  async updateProjekt(id: number, dto: UpdateProjektDTO) {
+    const response = await this.apiClient.patch(`/${id}`, dto);
+    return response.data;
+  }
 }

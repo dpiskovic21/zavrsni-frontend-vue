@@ -2,10 +2,11 @@
 import { onMounted, ref } from "vue";
 import { ProjektService } from "../services/ProjektService";
 import ProjektCard from "../components/ProjektCard.vue";
+import { type Projekt } from "../interfaces";
 
 const projektService = new ProjektService();
 
-const projekti = ref([]);
+const projekti = ref<Projekt[]>([]);
 
 onMounted(() => {
   dohvatiProjekte();
@@ -38,6 +39,7 @@ function dohvatiVrijednostStatusaProjekta(status: string) {
       v-for="projekt in projekti"
       :key="projekt.id"
       :projekt="projekt"
+      @projekt-izmjenjen="dohvatiProjekte"
     />
   </div>
 </template>
