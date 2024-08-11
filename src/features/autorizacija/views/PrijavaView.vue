@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
 import { RouterLink, useRouter } from "vue-router";
 import { useToast } from "primevue/useToast";
 import { AutorizacijaService } from "../services/AutorizacijaService";
 
 const toast = useToast();
 const ruter = useRouter();
+const servis = new AutorizacijaService();
+
 let email = "";
 let lozinka = "";
-let servis: AutorizacijaService;
-
-onMounted(() => {
-  servis = new AutorizacijaService();
-});
 
 async function prijava() {
   try {

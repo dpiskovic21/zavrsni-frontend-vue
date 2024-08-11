@@ -1,6 +1,52 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
+import { ProjektService } from "../services/ProjektService";
+import ProjektCard from "../components/ProjektCard.vue";
+
+const projektService = new ProjektService();
+
+const projekti = ref([]);
+
+onMounted(() => {
+  dohvatiProjekte();
+});
+
+async function dohvatiProjekte() {
+  projekti.value = (await projektService.getProjekti()).sort((a, b) => {
+    return (
+      dohvatiVrijednostStatusaProjekta(a.status) -
+      dohvatiVrijednostStatusaProjekta(b.status)
+    );
+  });
+}
+
+function dohvatiVrijednostStatusaProjekta(status: string) {
+  switch (status) {
+    case "U_TIJEKU":
+      return 0;
+    case "ZAVRSEN":
+      return 1;
+    default:
+      return 2;
+  }
+}
+</script>
+
 <template>
-  <h1>Projekt lista</h1>
+  <div>
+    <ProjektCard
+      v-for="projekt in projekti"
+      :key="projekt.id"
+      :projekt="projekt"
+    />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+div {
+  margin: 2rem;
+  display: flex;
+  gap: 5rem;
+  flex-wrap: wrap;
+}
+</style>
