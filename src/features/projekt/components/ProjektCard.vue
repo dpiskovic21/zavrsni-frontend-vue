@@ -58,7 +58,9 @@ function otvoriDialogZaDetalje() {
         {{ projekt.naziv }}
       </template>
       <template #content>
-        <p>Započet: {{ projekt.datumPocetka }}</p>
+        <p>
+          Započet: {{ new Date(projekt.datumPocetka).toLocaleDateString() }}
+        </p>
         <Tag :style="getProjektStatusTagPozadina(projekt.status)">{{
           getProjektSatusVrijednostZaPrikaz(projekt.status)
         }}</Tag>
