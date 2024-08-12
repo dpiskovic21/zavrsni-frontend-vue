@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Privitak } from "../interfaces";
+import PrivitakUpload from "./PrivitakUpload.vue";
 import { PrivitakService } from "../services/PrivitakService";
 
 const props = defineProps<{
@@ -32,13 +33,42 @@ async function preuzmiPrivitak(privitak: Privitak) {
 </script>
 
 <template>
-  <div class="privitak-lista">
-    <a
-      v-for="privitak of privitci"
-      :key="privitak.putanja"
-      @click="preuzmiPrivitak(privitak)"
-    >
-      {{ privitak.naziv }}
-    </a>
+  <div class="wrapper">
+    <div class="privitak-lista">
+      <a
+        v-for="privitak of privitci"
+        :key="privitak.putanja"
+        @click="preuzmiPrivitak(privitak)"
+      >
+        {{ privitak.naziv }}
+      </a>
+    </div>
+    <PrivitakUpload
+      :zadatakId="zadatakId"
+      @privitakUpload="emit('privitakUpload')"
+    />
   </div>
 </template>
+
+<style scoped>
+.wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: end;
+  gap: 0.5rem;
+  border: 1px solid black;
+  padding: 0.25rem 2rem;
+  margin-left: 1rem;
+}
+.privitak-lista {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: start;
+  gap: 0.5rem;
+}
+
+a:hover {
+  cursor: pointer;
+  color: red;
+}
+</style>

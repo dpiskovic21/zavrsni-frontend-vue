@@ -1,4 +1,5 @@
-import { type Privitak, type Komentar } from ".";
+import type { Komentar } from "@/features/komentar/interfaces";
+import type { Privitak } from "@/features/privitak/interfaces";
 import { type Korisnik } from "../../korisnik/interfaces";
 
 export interface Zadatak {

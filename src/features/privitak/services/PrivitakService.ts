@@ -24,7 +24,11 @@ export class PrivitakService {
   }
 
   async postPrivitak(dto: any) {
-    const response = await this.apiClient.post("", dto);
+    const response = await this.apiClient.post("", dto, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   }
 

@@ -28,15 +28,14 @@ let mozeZatvoritiIliVratitiNaDoradu = false;
 let mozeDodatiPrivitak = false;
 let trebaAzuriratiOpis = false;
 let mozePromjenitiIzvrsitelja = false;
-let editor: any = ref(null);
 
 onMounted(async () => {
   await dohvatiZadatak();
 
   setTimeout(() => {
-    console.log(editor.value);
     const editorElement = document.querySelector(".ql-editor");
-    editorElement.addEventListener("blur", updateOpis);
+    if (editorElement != null)
+      editorElement.addEventListener("blur", updateOpis);
   }, 1000);
 });
 
@@ -154,7 +153,7 @@ async function dodajKomentar() {
         Završen: {{ zadatak$.datumZavrsetka }}
       </p>
       <Button
-        v-if:="mozePoslatiNaPregled"
+        v-if="mozePoslatiNaPregled"
         @click="posaljiNaPregled"
         label="Pošalji na pregled"
       />
@@ -201,15 +200,14 @@ async function dodajKomentar() {
     </div>
 
     <Editor
-      ref="editor"
       v-model="zadatak$.opis"
-      @text-change="trebaAzuriratiOpis = true"
+      @text-change="() => (trebaAzuriratiOpis = true)"
     />
     <div class="komentari">
       <h3>Komentari</h3>
       <InputGroup>
         <InputText v-model="noviKomentar$" />
-        <Button @click="dodajKomentar" type="button" icon="pi pi-send" />
+        <Button @click="dodajKomentar" icon="pi pi-send" />
       </InputGroup>
       <div v-for="komentar of zadatak$.komentari" :key="komentar.id">
         <span
