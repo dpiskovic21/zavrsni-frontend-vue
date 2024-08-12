@@ -14,7 +14,7 @@ function odjava() {
 <template>
   <nav>
     <RouterLink to="/projekt/lista">Projekti</RouterLink>
-    <RouterLink to="">Statistika</RouterLink>
+    <RouterLink to="/statistika">Statistika</RouterLink>
     <RouterLink to="">Admin panel</RouterLink>
     <a @click="odjava">Odjava</a>
   </nav>

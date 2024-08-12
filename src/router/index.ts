@@ -28,6 +28,12 @@ const router = createRouter({
       name: "zadatak-lista",
       component: () => import("../features/zadatak/views/ZadatakListaView.vue"),
     },
+    {
+      path: "/statistika",
+      name: "statistika",
+      component: () =>
+        import("../features/statistika/views/StatistikaHomeView.vue"),
+    },
   ],
 });
 

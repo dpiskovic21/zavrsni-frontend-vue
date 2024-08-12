@@ -1,6 +1,11 @@
 import axios, { type AxiosInstance } from "axios";
 import { config } from "@/shared/Config";
-import type { Projekt, UpdateProjektDTO } from "../interfaces";
+import type {
+  CreateProjektDTO,
+  Projekt,
+  UpdateProjektDTO,
+} from "../interfaces";
+import type { Statistika } from "@/features/statistika/interfaces";
 
 export class ProjektService {
   private apiClient: AxiosInstance;
@@ -13,13 +18,13 @@ export class ProjektService {
     });
   }
 
-  //   createProjekt(dto: CreateProjektDTO) {
-  //     return this.http.post(this.url, dto);
-  //   }
+  async createProjekt(dto: CreateProjektDTO) {
+    const response = await this.apiClient.post("/", dto);
+    return response.data;
+  }
 
   async getProjekti(): Promise<Projekt[]> {
     const response = await this.apiClient.get("/");
-    console.log(response);
     return response.data;
   }
 
@@ -28,15 +33,17 @@ export class ProjektService {
     return response.data;
   }
 
-  //   getProjektStatistika(id: number, datum: Date | null = null) {
-  //     let datumQuery = '';
-  //     if (datum) {
-  //       datumQuery = `?datum=${datum.toISOString()}`;
-  //     }
-  //     return this.http.get<ProjektStatistika>(
-  //       `${this.url}/${id}/statistika${datumQuery}`
-  //     );
-  //   }
+  async getProjektStatistika(id: number, datum: Date | null = null) {
+    let datumQuery = "";
+    if (datum) {
+      datumQuery = `?datum=${datum.toISOString()}`;
+    }
+
+    const response = await this.apiClient.get<Statistika>(
+      `/${id}/statistika${datumQuery}`
+    );
+    return response.data;
+  }
 
   async deleteProjekt(id: string) {
     const response = await this.apiClient.delete(`/${id}`);
