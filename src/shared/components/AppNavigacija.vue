@@ -1,5 +1,14 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
+import { AutorizacijaService } from "@/features/autorizacija/services/AutorizacijaService";
+
+const autorizacijaService = new AutorizacijaService();
+const ruter = useRouter();
+
+function odjava() {
+  autorizacijaService.odjava();
+  ruter.push("/autorizacija/prijava");
+}
 </script>
 
 <template>
@@ -7,6 +16,7 @@ import { RouterLink } from "vue-router";
     <RouterLink to="/projekt/lista">Projekti</RouterLink>
     <RouterLink to="">Statistika</RouterLink>
     <RouterLink to="">Admin panel</RouterLink>
+    <a @click="odjava">Odjava</a>
   </nav>
 </template>
 

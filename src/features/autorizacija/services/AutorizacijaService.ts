@@ -28,4 +28,8 @@ export class AutorizacijaService {
     const response = await this.apiClient.post("/prijava", dto);
     return response.data;
   }
+
+  odjava() {
+    localStorage.removeItem("korisnik");
+  }
 }
