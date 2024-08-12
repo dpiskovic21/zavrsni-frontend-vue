@@ -15,7 +15,11 @@ function odjava() {
   <nav>
     <RouterLink to="/projekt/lista">Projekti</RouterLink>
     <RouterLink to="/statistika">Statistika</RouterLink>
-    <RouterLink to="">Admin panel</RouterLink>
+    <RouterLink
+      to="/admin"
+      v-if="autorizacijaService.prijavljeniKorisnik?.admin == true"
+      >Admin panel</RouterLink
+    >
     <a @click="odjava">Odjava</a>
   </nav>
 </template>
