@@ -6,14 +6,14 @@ import { type Projekt } from "../interfaces";
 
 const projektService = new ProjektService();
 
-const projekti = ref<Projekt[]>([]);
+const projekti$ = ref<Projekt[]>([]);
 
 onMounted(() => {
   dohvatiProjekte();
 });
 
 async function dohvatiProjekte() {
-  projekti.value = (await projektService.getProjekti()).sort((a, b) => {
+  projekti$.value = (await projektService.getProjekti()).sort((a, b) => {
     return (
       dohvatiVrijednostStatusaProjekta(a.status) -
       dohvatiVrijednostStatusaProjekta(b.status)
@@ -36,7 +36,7 @@ function dohvatiVrijednostStatusaProjekta(status: string) {
 <template>
   <div>
     <ProjektCard
-      v-for="projekt in projekti"
+      v-for="projekt in projekti$"
       :key="projekt.id"
       :projekt="projekt"
       @projekt-izmjenjen="dohvatiProjekte"

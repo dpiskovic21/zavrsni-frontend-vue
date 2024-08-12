@@ -1,10 +1,26 @@
 <script setup lang="ts">
+import { useDialog } from "primevue/usedialog";
 import type { Zadatak } from "../interfaces";
 import ZadatakPrioritetChip from "./ZadatakPrioritetChip.vue";
-
+import ZadatakDetalji from "./ZadatakDetalji.vue";
 const props = defineProps<{ zadatak: Zadatak }>();
+const emit = defineEmits<{
+  izmjenjen: [];
+}>();
+const dialog = useDialog();
 
-function otvoriDetalje() {}
+function otvoriDetalje() {
+  dialog.open(ZadatakDetalji, {
+    props: {
+      header: props.zadatak.naziv,
+      modal: true,
+    },
+    data: props.zadatak.id,
+    onClose: (r) => {
+      if (r) emit("izmjenjen");
+    },
+  });
+}
 </script>
 
 <template>
@@ -15,7 +31,7 @@ function otvoriDetalje() {}
     <template #content>
       <ZadatakPrioritetChip :prioritet="zadatak.prioritet" />
       <p>Stats: {{ zadatak.status }}</p>
-      <p>Rok: {{ zadatak.rok }}</p>
+      <p>Rok: {{ new Date(zadatak.rok).toLocaleDateString() }}</p>
     </template>
 
     <template #footer>

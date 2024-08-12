@@ -22,7 +22,7 @@ const sortiranja: { ime: string }[] = [
 <template>
   <div class="wrapper">
     <FloatLabel>
-      <Dropdown
+      <Select
         :options="prikazi"
         optionLabel="ime"
         optionValue="ime"

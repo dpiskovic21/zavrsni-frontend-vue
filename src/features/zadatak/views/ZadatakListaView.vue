@@ -14,37 +14,36 @@ const autorizacijaService = new AutorizacijaService();
 const route = useRoute();
 const dialog = useDialog();
 
-const zadaci = ref<Zadatak[]>([]);
-const prikaz = ref("Aktivni");
-const sortiranje = ref("Datum izrade");
-const pretraga = ref("");
+const zadaci$ = ref<Zadatak[]>([]);
+const prikaz$ = ref("Aktivni");
+const sortiranje$ = ref("Datum izrade");
+const pretraga$ = ref("");
 let mozeDodatiZadatak = false;
 
 onMounted(() => {
   dohvatiZadatke();
-  console.log(zadaci);
 });
 
 async function dohvatiZadatke() {
   const projekt = await projektService.getProjekt(route.params.id as string);
-  zadaci.value = projekt
+  zadaci$.value = projekt
     .zadaci!.filter((zadatak) =>
-      prikaz.value === "Aktivni"
+      prikaz$.value === "Aktivni"
         ? zadatak.status === "U_IZRADI"
-        : prikaz.value === "Završeni"
+        : prikaz$.value === "Završeni"
           ? zadatak.status === "ZATVOREN"
-          : prikaz.value === "Moji"
+          : prikaz$.value === "Moji"
             ? zadatak.izvrsiteljId ==
               autorizacijaService.prijavljeniKorisnik?.id
             : true
     )
     .filter((zadatak) =>
-      zadatak.naziv.toLowerCase().includes(pretraga.value.toLowerCase())
+      zadatak.naziv.toLowerCase().includes(pretraga$.value.toLowerCase())
     )
     .sort((a, b) =>
-      sortiranje.value === "Rok"
+      sortiranje$.value === "Rok"
         ? new Date(b.rok).getTime() - new Date(a.rok).getTime()
-        : sortiranje.value === "Prioritet"
+        : sortiranje$.value === "Prioritet"
           ? dohvatiVrijednostPrioriteta(b) - dohvatiVrijednostPrioriteta(a)
           : new Date(a.datumIzrade).getTime() -
             new Date(b.datumIzrade).getTime()
@@ -83,17 +82,17 @@ function dohvatiVrijednostPrioriteta(zadatak: Zadatak) {
 }
 
 function onPretrageChange(value: string) {
-  pretraga.value = value;
+  pretraga$.value = value;
   dohvatiZadatke();
 }
 
 function onPrikazChange(value: string) {
-  prikaz.value = value;
+  prikaz$.value = value;
   dohvatiZadatke();
 }
 
 function onSortiranjeChange(value: string) {
-  sortiranje.value = value;
+  sortiranje$.value = value;
   dohvatiZadatke();
 }
 
@@ -104,6 +103,7 @@ function otvoriDialogZaIzraduZadatka() {
       style: {
         width: "75vw",
       },
+      modal: true,
     },
     onClose: (dodanNovi) => {
       if (dodanNovi) dohvatiZadatke();
@@ -121,9 +121,10 @@ function otvoriDialogZaIzraduZadatka() {
 
   <div class="zadaci">
     <ZadatakCard
-      v-for="zadatak of zadaci"
+      v-for="zadatak of zadaci$"
       :key="zadatak.id"
       :zadatak="zadatak"
+      @izmjenjen="dohvatiZadatke"
     ></ZadatakCard>
   </div>
 

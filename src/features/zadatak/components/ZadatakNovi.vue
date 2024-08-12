@@ -6,20 +6,21 @@ import { useRoute } from "vue-router";
 import type { CreateZadatakDTO } from "../interfaces";
 import { ZadatakService } from "../services/ZadatakService";
 import { useToast } from "primevue/useToast";
+import type { DynamicDialogOptions } from "primevue/dynamicdialogoptions";
 
 const korisnikService = new KorisnikService();
 const autorizacijaService = new AutorizacijaService();
 const zadatakService = new ZadatakService();
 const ruta = useRoute();
 const toast = useToast();
-const dialogRef = inject("dialogRef");
+const dialogRef: DynamicDialogOptions = inject("dialogRef")!;
 
-const korisnici = ref<{ prikaz: string; vrijednost: number }[]>([]);
-let naziv = ref("");
-let opis = ref("");
-let rok = ref<Date | null>(null);
-let izvrsitelj = ref<number | null>(null);
-let prioritet = ref("NIZAK");
+const korisnici$ = ref<{ prikaz: string; vrijednost: number }[]>([]);
+let naziv$ = ref("");
+let opis$ = ref("");
+let rok$ = ref<Date | null>(null);
+let izvrsitelj$ = ref<number | null>(null);
+let prioritet$ = ref("NIZAK");
 
 const prioriteti = [
   { prikaz: "Nizak", vrijednost: "NIZAK" },
@@ -29,7 +30,7 @@ const prioriteti = [
 ];
 
 onMounted(async () => {
-  korisnici.value = (await korisnikService.getKorisnici()).map((korisnik) => ({
+  korisnici$.value = (await korisnikService.getKorisnici()).map((korisnik) => ({
     prikaz: korisnik.ime + " " + korisnik.prezime,
     vrijednost: korisnik.id,
   }));
@@ -39,11 +40,11 @@ async function dodajZadatak() {
   const dto: CreateZadatakDTO = {
     projektId: +ruta.params.id,
     izvjestiteljId: autorizacijaService.prijavljeniKorisnik?.id!,
-    naziv: naziv.value,
-    opis: opis.value,
-    rok: rok.value!,
-    prioritet: prioritet.value,
-    izvrsiteljId: izvrsitelj.value!,
+    naziv: naziv$.value,
+    opis: opis$.value,
+    rok: rok$.value!,
+    prioritet: prioritet$.value,
+    izvrsiteljId: izvrsitelj$.value!,
   };
 
   try {
@@ -74,10 +75,10 @@ async function dodajZadatak() {
       <StepPanel v-slot="{ activateCallback }" value="1">
         <div>
           <FloatLabel>
-            <InputText inputId="naziv" v-model="naziv" />
+            <InputText inputId="naziv" v-model="naziv$" />
             <label for="naziv">Naziv zadatka</label>
           </FloatLabel>
-          <Editor :style="{ height: '320px' }" v-model="opis" />
+          <Editor :style="{ height: '320px' }" v-model="opis$" />
         </div>
         <div style="margin-top: 3rem">
           <Button
@@ -85,7 +86,7 @@ async function dodajZadatak() {
             icon="pi pi-arrow-right"
             iconPos="right"
             @click="activateCallback('2')"
-            :disabled="naziv == '' || opis == ''"
+            :disabled="naziv$ == '' || opis$ == ''"
             style="float: right"
           />
         </div>
@@ -96,7 +97,7 @@ async function dodajZadatak() {
             :options="prioriteti"
             optionLabel="prikaz"
             optionValue="vrijednost"
-            v-model="prioritet"
+            v-model="prioritet$"
           />
           <FloatLabel>
             <Calendar
@@ -104,16 +105,16 @@ async function dodajZadatak() {
               iconDisplay="input"
               :showIcon="true"
               :minDate="new Date()"
-              v-model="rok"
+              v-model="rok$"
             />
             <label>Rok</label>
           </FloatLabel>
           <Dropdown
-            :options="korisnici"
+            :options="korisnici$"
             optionLabel="prikaz"
             optionValue="vrijednost"
             placeholder="Izvršitelj"
-            v-model="izvrsitelj"
+            v-model="izvrsitelj$"
           />
         </div>
         <div style="margin-top: 2rem">
@@ -129,7 +130,7 @@ async function dodajZadatak() {
             iconPos="right"
             @click="dodajZadatak"
             :style="{ float: 'right' }"
-            :disabled="prioritet == '' || rok == null || izvrsitelj == null"
+            :disabled="prioritet$ == '' || rok$ == null || izvrsitelj$ == null"
           />
         </div>
       </StepPanel>
