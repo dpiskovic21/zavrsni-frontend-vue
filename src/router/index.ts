@@ -29,6 +29,11 @@ const router = createRouter({
 			component: () => import('../features/zadatak/views/ZadatakListaView.vue'),
 		},
 		{
+			path: '/projekt/novi',
+			name: 'projekt-novi',
+			component: () => import('../features/projekt/views/ProjektNoviView.vue'),
+		},
+		{
 			path: '/statistika',
 			name: 'statistika',
 			component: () =>

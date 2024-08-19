@@ -28,7 +28,7 @@ const sortiranja: { ime: string }[] = [
         optionValue="ime"
         @change="emit('prikaz', $event.value)"
       />
-      <label>Prikazani projekti:</label>
+      <label>Prikazani zadatci:</label>
     </FloatLabel>
     <InputText
       @input="emit('pretragaText', $event.target!.value)"

@@ -30,7 +30,7 @@ async function registracija() {
         life: 3000,
       });
       ruter.push({ name: "prijava" });
-  } catch(e) {
+  } catch(e: any) {
     toast.add({
       severity: "error",
       summary: "Greška",
