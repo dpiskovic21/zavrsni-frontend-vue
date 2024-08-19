@@ -19,7 +19,7 @@ async function prijava() {
     toast.add({
       severity: "error",
       summary: "Greška",
-      detail: error.response.data.message ?? "Nepoznata greška",
+      detail: error.response && error.response.data ? error.response.data.message : "Nepoznata greška",
       life: 3000,
     });
   }
@@ -30,7 +30,7 @@ async function prijava() {
   <div class="wrapper">
     <form>
       <InputText placeholder="EMAIL" v-model="email" />
-      <InputText placeholder="LOZINKA" v-model="lozinka" />
+      <Password :feedback="false" placeholder="LOZINKA" v-model="lozinka" />
       <Button label="Prijava" @click="prijava" />
     </form>
     <RouterLink to="/autorizacija/registracija">Registracija</RouterLink>

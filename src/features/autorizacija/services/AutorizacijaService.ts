@@ -1,35 +1,40 @@
-import axios, { type AxiosInstance } from "axios";
-import { config } from "@/shared/Config";
-import type { PrijavaDTO } from "../interfaces";
-import type { Korisnik } from "@/features/korisnik/interfaces";
+import axios, { type AxiosInstance } from 'axios';
+import { config } from '@/shared/Config';
+import type { PrijavaDTO, RegistracijaDTO } from '../interfaces';
+import type { Korisnik } from '@/features/korisnik/interfaces';
 
 export class AutorizacijaService {
-  private apiClient: AxiosInstance;
-  constructor() {
-    this.apiClient = axios.create({
-      baseURL: `${config.apiURL}/autorizacija`,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-  }
+	private apiClient: AxiosInstance;
+	constructor() {
+		this.apiClient = axios.create({
+			baseURL: `${config.apiURL}/autorizacija`,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		});
+	}
 
-  get prijavljeniKorisnik(): Korisnik | null {
-    const korisnik = JSON.parse(localStorage.getItem("korisnik")!);
+	get prijavljeniKorisnik(): Korisnik | null {
+		const korisnik = JSON.parse(localStorage.getItem('korisnik')!);
 
-    if (!korisnik) {
-      return null;
-    }
+		if (!korisnik) {
+			return null;
+		}
 
-    return korisnik;
-  }
+		return korisnik;
+	}
 
-  async prijava(dto: PrijavaDTO) {
-    const response = await this.apiClient.post("/prijava", dto);
-    return response.data;
-  }
+	async prijava(dto: PrijavaDTO) {
+		const response = await this.apiClient.post('/prijava', dto);
+		return response.data;
+	}
 
-  odjava() {
-    localStorage.removeItem("korisnik");
-  }
+	async registracija(dto: RegistracijaDTO) {
+		const response = await this.apiClient.post('/registracija', dto);
+		return response.data;
+	}
+
+	odjava() {
+		localStorage.removeItem('korisnik');
+	}
 }
