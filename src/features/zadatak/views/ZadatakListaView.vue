@@ -42,7 +42,7 @@ async function dohvatiZadatke() {
     )
     .sort((a, b) =>
       sortiranje$.value === "Rok"
-        ? new Date(b.rok).getTime() - new Date(a.rok).getTime()
+        ? new Date(a.rok).getTime() - new Date(b.rok).getTime()
         : sortiranje$.value === "Prioritet"
           ? dohvatiVrijednostPrioriteta(b) - dohvatiVrijednostPrioriteta(a)
           : new Date(a.datumIzrade).getTime() -

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import {ref} from 'vue';
 const emit = defineEmits<{
   prikaz: [x: string];
   pretragaText: [x: string];
@@ -17,6 +18,8 @@ const sortiranja: { ime: string }[] = [
   { ime: "Rok" },
   { ime: "Prioritet" },
 ];
+const odabraniPrikaz$ = ref("Aktivni");
+const odabranoSortiranje$ = ref("Datum izrade");
 </script>
 
 <template>
@@ -24,6 +27,7 @@ const sortiranja: { ime: string }[] = [
     <FloatLabel>
       <Select
         :options="prikazi"
+        v-model="odabraniPrikaz$"
         optionLabel="ime"
         optionValue="ime"
         @change="emit('prikaz', $event.value)"
@@ -37,6 +41,7 @@ const sortiranja: { ime: string }[] = [
     <FloatLabel>
       <Dropdown
         :options="sortiranja"
+        v-model="odabranoSortiranje$"
         optionLabel="ime"
         optionValue="ime"
         @change="emit('sortiranje', $event.value)"

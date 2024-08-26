@@ -147,10 +147,9 @@
 	<div v-if="zadatak$">
 		<div class="osnovni-detalji">
 			<ZadatakPrioritetChip :prioritet="zadatak$.prioritet" />
-			<p>{{ zadatak$.status }}</p>
-			<p>Napravljen: {{ zadatak$.datumIzrade }}</p>
+			<p>Napravljen: {{ new Date(zadatak$.datumIzrade).toLocaleString() }}</p>
 			<p v-if="zadatak$.datumZavrsetka && zadatak$.status == 'ZATVOREN'">
-				Završen: {{ zadatak$.datumZavrsetka }}
+				Završen: {{ new Date(zadatak$.datumZavrsetka).toLocaleString() }}
 			</p>
 			<Button
 				v-if="mozePoslatiNaPregled"
