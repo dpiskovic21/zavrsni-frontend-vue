@@ -33,6 +33,7 @@ async function preuzmiPrivitak(privitak: Privitak) {
 </script>
 
 <template>
+  <h4 style="margin-bottom:0">Privitci</h4>
   <div class="wrapper">
     <div class="privitak-lista">
       <a
@@ -44,6 +45,7 @@ async function preuzmiPrivitak(privitak: Privitak) {
       </a>
     </div>
     <PrivitakUpload
+      style="float:right;margin-top: -3rem;"
       :zadatakId="zadatakId"
       @privitakUpload="emit('privitakUpload')"
     />
@@ -52,23 +54,21 @@ async function preuzmiPrivitak(privitak: Privitak) {
 
 <style scoped>
 .wrapper {
-  flex: 1;
-  display: flex;
-  justify-content: end;
-  gap: 0.5rem;
-  border: 1px solid black;
-  padding: 0.25rem 2rem;
-  margin-left: 1rem;
+  padding:1rem;
+  border: 1px solid #222;
+  border-radius: 8px;
+  background-color: #333;
 }
-.privitak-lista {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: start;
-  gap: 0.5rem;
-}
+  
+  .privitak-lista a {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #61a2d3;
+    text-decoration: none;
+  }
+  
+  .privitak-lista a:hover {
+    text-decoration: underline;
+  }
 
-a:hover {
-  cursor: pointer;
-  color: red;
-}
 </style>

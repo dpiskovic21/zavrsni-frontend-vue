@@ -3,9 +3,10 @@ import { useDialog } from "primevue/usedialog";
 import type { Zadatak } from "../interfaces";
 import ZadatakPrioritetChip from "./ZadatakPrioritetChip.vue";
 import ZadatakDetalji from "./ZadatakDetalji.vue";
+
 const props = defineProps<{ zadatak: Zadatak }>();
 const emit = defineEmits<{
-  izmjenjen: [];
+  zadatakIzmjenjen: [];
 }>();
 const dialog = useDialog();
 
@@ -16,8 +17,8 @@ function otvoriDetalje() {
       modal: true,
     },
     data: props.zadatak.id,
-    onClose: (r) => {
-      if (r) emit("izmjenjen");
+    onClose: (izmjenjen) => {
+      if (izmjenjen) emit("zadatakIzmjenjen");
     },
   });
 }

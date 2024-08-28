@@ -124,7 +124,7 @@ function otvoriDialogZaIzraduZadatka() {
       v-for="zadatak of zadaci$"
       :key="zadatak.id"
       :zadatak="zadatak"
-      @izmjenjen="dohvatiZadatke"
+      @zadatakIzmjenjen="dohvatiZadatke"
     ></ZadatakCard>
   </div>
 

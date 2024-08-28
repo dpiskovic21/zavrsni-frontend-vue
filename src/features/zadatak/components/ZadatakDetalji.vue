@@ -146,25 +146,25 @@
 <template>
 	<div v-if="zadatak$">
 		<div class="osnovni-detalji">
-			<ZadatakPrioritetChip :prioritet="zadatak$.prioritet" />
-			<p>Napravljen: {{ new Date(zadatak$.datumIzrade).toLocaleString() }}</p>
-			<p v-if="zadatak$.datumZavrsetka && zadatak$.status == 'ZATVOREN'">
-				Završen: {{ new Date(zadatak$.datumZavrsetka).toLocaleString() }}
-			</p>
-			<Button
-				v-if="mozePoslatiNaPregled"
-				@click="posaljiNaPregled"
-				label="Pošalji na pregled" />
-			<Button
-				label="Vrati na doradu"
-				v-if="mozeZatvoritiIliVratitiNaDoradu"
-				@click="vratiNaDoradu" />
-			<Button
-				v-if="mozeZatvoritiIliVratitiNaDoradu"
-				@click="zatvori"
-				label="Zatvori zadatak" />
+			<div class="osnovno">
+				<ZadatakPrioritetChip :prioritet="zadatak$.prioritet" />
+				<p>Napravljen: {{ new Date(zadatak$.datumIzrade).toLocaleString() }}</p>
+				<p v-if="zadatak$.datumZavrsetka && zadatak$.status == 'ZATVOREN'">
+					Završen: {{ new Date(zadatak$.datumZavrsetka).toLocaleString() }}
+				</p>
+				<Button
+					v-if="mozePoslatiNaPregled"
+					@click="posaljiNaPregled"
+					label="Pošalji na pregled" />
+				<Button
+					label="Vrati na doradu"
+					v-if="mozeZatvoritiIliVratitiNaDoradu"
+					@click="vratiNaDoradu" />
+				<Button
+					v-if="mozeZatvoritiIliVratitiNaDoradu"
+					@click="zatvori"
+					label="Zatvori zadatak" />
 		</div>
-		<div class="korisnici-privitci">
 			<div class="korisnici">
 				<p style="margin-bottom: 1.5rem">
 					Izvjestitelj:
@@ -174,9 +174,9 @@
 					Izvršitelj:
 					{{ zadatak$.izvrsitelj.ime + ' ' + zadatak$.izvrsitelj.prezime }}
 				</p>
-				<FloatLabel>
+				<FloatLabel 
+				v-if="mozePromjenitiIzvrsitelja">
 					<Select
-						v-if="mozePromjenitiIzvrsitelja"
 						:options="korisnici$"
 						optionLabel="naziv"
 						v-model="zadatak$.izvrsiteljId"
@@ -186,12 +186,13 @@
 					<label for="izvrsitelj">Izvršitelj</label>
 				</FloatLabel>
 			</div>
+		</div>
 			<PrivitakLista
+				style="margin-bottom: 5rem"
 				:privitci="zadatak$.privitci"
 				:zadatakId="zadatak$.id"
 				:mozeDodati="mozeDodatiPrivitak"
 				@privitakUpload="dohvatiZadatak" />
-		</div>
 
 		<Editor
 			v-model="zadatak$.opis"
@@ -214,21 +215,11 @@
 </template>
 
 <style scoped>
-	.sadrzaj {
-		display: flex;
-		padding: 2.5rem;
-	}
-
 	.osnovni-detalji {
-		display: flex;
-		gap: 1rem;
-		justify-content: start;
-		align-items: center;
-	}
-
-	.korisnici-privitci {
 		display: flex;
 		justify-content: space-between;
 		margin-bottom: 1rem;
+
 	}
 </style>
+
